@@ -155,7 +155,7 @@ _4bit = function() {
         cyan : 'cyan',
         bright_cyan : 'cyan(bold)',
         white : 'white',
-        bright_while : 'white(bold)'
+        bright_white : 'white(bold)'
     }
 
 	var Scheme = Backbone.Model.extend({
