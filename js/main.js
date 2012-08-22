@@ -139,6 +139,25 @@ _4bit = function() {
 		'bright_white'
 	]
 
+   var XSH_COLOR_MAP = {
+        black : 'black',
+        bright_black : 'black(bold)',
+        red : 'red',
+        bright_red : 'red(bold)',
+        green : 'green',
+        bright_green : 'green(bold)',
+        yellow : 'yellow',
+        bright_yellow : 'yellow(bold)',
+        blue : 'blue',
+        bright_blue : 'blue(bold)',
+        magenta : 'magenta',
+        bright_magenta : 'magenta(bold)',
+        cyan : 'cyan',
+        bright_cyan : 'cyan(bold)',
+        white : 'white',
+        bright_while : 'white(bold)'
+    }
+
 	var Scheme = Backbone.Model.extend({
 		
 		defaults: {
@@ -410,33 +429,23 @@ _4bit = function() {
 			var xresources = ''
 			var counter = 0;
 
-			xresources += '! --- ~/.Xresources ------------------------------------------------------------\n';
-			xresources += '! ------------------------------------------------------------------------------\n';
-			xresources += '! --- generated with 4bit Terminal Color Scheme Designer -----------------------\n';
-			xresources += '! ------------------------------------------------------------------------------\n';
-			xresources += '! --- http://ciembor.github.com/4bit -------------------------------------------\n';
-			xresources += '! ------------------------------------------------------------------------------\n\n';
+            xresources += '[generatedByMJ]\n';
 
-			xresources += '! --- special colors ---\n\n'
-			xresources += '*background: ' + that.model.get('colors')['background'] + '\n';
-			xresources += '*foreground: ' + that.model.get('colors')['foreground'] + '\n\n';
+            var hexcolor = that.model.get('colors')['background']+"";
+			xresources += 'background=' + hexcolor.slice(1) + '\n';
+            hexcolor = that.model.get('colors')['foreground']+"";
+			xresources += 'text=' + hexcolor.slice(1) + '\n';
+			xresources += 'text(bold)=' + hexcolor.slice(1) + '\n';
 
-			xresources += '! --- standard colors ---\n\n';
 			_.each(COLOR_NAMES, function(name) {
-				var number = counter / 2;
 				
-				if (0 === name.indexOf('bright_')) {
-					number += 7.5;
-				}
-				
-				xresources += '! ' + name + '\n';
-				xresources += '*color' + number + ': ' + that.model.get('colors')[name] + '\n\n';
-				counter += 1;
+                var hexcolor = that.model.get('colors')[name]+"";
+				xresources += XSH_COLOR_MAP[name] + '=' + hexcolor.slice(1) + '\n';
 			});
 			
-			xresources += '\n! ------------------------------------------------------------------------------\n';
-			xresources += '! --- end of terminal colors section -------------------------------------------\n';
-			xresources += '! ------------------------------------------------------------------------------\n\n';
+			xresources += '[Names]\n';
+			xresources += 'count=1\n';
+			xresources += 'name0=generatedByMJ\n';
 
 			$('#xresources-button').attr('href', 'data:text/plain,' + encodeURIComponent(xresources));
 		}
