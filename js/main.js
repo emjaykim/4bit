@@ -99,7 +99,7 @@ _4bit = function() {
 			color = [h, s, l];
 		}
 
-		toString = function() {
+		stringify = function() {
 			var blended = goog.color.hslArrayToRgb(color);
 			var blender = goog.color.hslToRgb(dye[0], dye[1], dye[2]);
 			var factor = dye[3];
@@ -116,7 +116,7 @@ _4bit = function() {
 			setLightness: setLightness,
 			setDye: setDye,
 			setHsl: setHsl,
-			toString: toString
+			toString:stringify 
 		}
 	}
 
@@ -399,11 +399,11 @@ _4bit = function() {
 		
 		render: function() {
 			var that = this;
-			$('#display').css('color', that.model.get('colors')['foreground']);
-			$('#display').css('background-color', that.model.get('colors')['background']);
+			$('#display').css('color', that.model.get('colors')['foreground'].toString());
+			$('#display').css('background-color', that.model.get('colors')['background'].toString());
 			_.each(COLOR_NAMES, function(name) {
-				$('.' + name).css('color', that.model.get('colors')[name]);
-				$('.bg-' + name).css('background-color', that.model.get('colors')[name]);
+				$('.' + name).css('color', that.model.get('colors')[name].toString());
+				$('.bg-' + name).css('background-color', that.model.get('colors')[name].toString());
 			});
 		}
 		
@@ -416,10 +416,10 @@ _4bit = function() {
 		initialize: function() {
 			_.bindAll(this, 'render');
 			var that = this;
-			$('#xresources-button').hover(function() {
+			$('#downloadify').hover(function() {
 				that.render();
 			});
-			$('#xresources-button').focus(function() {
+			$('#downloadify').focus(function() {
 				that.render();
 			});
 		},
@@ -447,7 +447,7 @@ _4bit = function() {
 			xresources += 'count=1\n';
 			xresources += 'name0=generatedByMJ\n';
 
-			$('#xresources-button').attr('href', 'data:text/plain,' + encodeURIComponent(xresources));
+			$('#xresources-text').text(xresources);
 		}
 		
 	});
